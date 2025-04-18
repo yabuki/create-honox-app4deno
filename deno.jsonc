@@ -6,11 +6,12 @@
     "fmt": "deno fmt"
   },
   "imports": {
+    "@david/dax": "jsr:@david/dax@^0.42.0",
     "@std/assert": "jsr:@std/assert@1"
   },
   "lint": {
     "include": ["src/", "tests/"],
-    // "exclude": ["src/testdata/", "src/fixtures/**/*.ts"],
+    // "exclude": ["src/test_data/", "src/fixtures/**/*.ts"],
     "rules": {
       "tags": ["recommended"],
       "include": ["eqeqeq"]
