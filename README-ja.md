@@ -20,4 +20,8 @@ ProjectRoot
 + tests ユニットテスト
 ```
 
+## 参考にした。またはしたい。repo
+
+- [4513ECHO/etude-honox-deno: An example of using HonoX with Deno](https://github.com/4513ECHO/etude-honox-deno)
+
 Cspell:ignore honox
