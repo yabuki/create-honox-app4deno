@@ -17,6 +17,8 @@ HonoXをDenoで使うに当たって環境設定を行うプログラムです�
 ProjectRoot
 + src ソースファイル
 + template テンプレート
+ + app
+ + public
 + tests ユニットテスト
 ```
 
