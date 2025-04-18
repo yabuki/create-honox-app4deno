@@ -15,12 +15,18 @@
 
 ## 直近
 
-- [ ] deno init
-- [ ] deno.jsoncを作る
+- [x] deno init
+- [x] deno.jsoncを作る
   - [x] 初期のlintの設定
 - [x] 一発めの`deno task test`を実行して、passした。
+- [x] daxを使って楽をする。
+- [x] ./template/に初期コードをぶっこむ。
+  - [ ] template配下に必要な設定ファイルを作る
+  - [ ] daxでdeno add hono honox viteを追加する。
 
 ## テスト駆動用の作りたい機能リスト
+
+- [ ] daxのテストって、どうするの?
 
 ## 将来
 
