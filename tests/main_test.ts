@@ -1,6 +1,9 @@
-import { assertEquals } from "@std/assert";
-import { add } from "../src/main.ts";
+// import { assertEquals } from "@std/assert";
 
-Deno.test(function addTest() {
-  assertEquals(add(2, 3), 5);
+import { createNewDirectory } from "../src/files.ts";
+
+
+Deno.test(async function createDir() {
+  const path_and_dirname = "/tmp/hoge/";
+  await createNewDirectory(path_and_dirname);
 });
