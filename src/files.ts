@@ -8,10 +8,10 @@ export async function createNewDirectory(
 	path_and_filename: string,
 ): Promise<boolean> {
 	if (isDircectoryExists(path_and_filename)) {
-		console.log("Directory or file already exists");
+		$.logWarn("Directory or file already exists");
 		return false;
 	}
-	console.log("Creating directory: ", path_and_filename);
+	$.log("Creating directory: ", path_and_filename);
 	// createDirectory(path_and_filename);
 	await copyDirectory("template/", path_and_filename);
 	return true;
@@ -20,10 +20,22 @@ export async function createNewDirectory(
 //   await $`mkdir -p ${path}`;
 // }
 async function copyDirectory(src: string, dest: string) {
-	// console.log("current dir: ", Deno.cwd());
-	console.log("src: ", src);
-	console.log("dest: ", dest);
 	await $`cp -r ${src} ${dest}`;
+}
+
+/**
+ * 指定のディレクトリを削除する。
+ * @param path_and_filename
+ * @returns {Promise<boolean>}
+ */
+export async function removeDirectory( path_and_filename: string): Promise<boolean> {
+  try {
+    await $`rm -rf ${path_and_filename}`;
+  } catch (e) {
+    $.logError("Error: ", e);
+    return false;
+  }
+  return true;
 }
 
 /**
@@ -38,25 +50,25 @@ export function isDircectoryExists(path_and_filename: string): boolean {
 	try {
 		const file_info = Deno.statSync(path_and_filename);
 		if (file_info.isFile) {
-			console.log("File exists");
+			$.logWarn("File exists");
 			return true;
 		}
 		if (file_info.isSymlink) {
-			console.log("Symlink exists");
+			$.logWarn("Symlink exists");
 			return true;
 		}
 		if (file_info.isDirectory) {
-			console.log("Directory exists");
+			$.logWarn("Directory exists");
 			return true;
 		}
 		assert(false, "Unknown file type");
 		return false;
 	} catch (e) {
 		if (e instanceof Deno.errors.NotFound) {
-			console.log("File does not exist");
+			$.logError("File does not exist");
 			return false;
 		}
-		console.log("Error: ", e);
+		$.logError("Error: ", e);
 		return false;
 	}
 }
@@ -89,4 +101,25 @@ export async function askOverwrite(): Promise<boolean> {
     message: "Do you want to overwrite?",
     default: false,
   });
+}
+
+/***
+ * Install npm modules.
+ * @param path_and_filename
+ */
+export async function installNpmModules(path_and_filename: string): Promise<void> {
+  // Move to the directory
+  // await $`cd ${path_and_filename}`;
+  await $.cd(path_and_filename);
+  $.log(Deno.cwd());
+
+ 
+  // 移動してからdeno addしないとnpmのモジュールが
+  // インストールされない。自分のいまのプロジェクトに
+  // インストールされてしまう。
+  await $`cd ${path_and_filename} && deno add npm:hono@latest`;
+  await $`cd ${path_and_filename} && deno add npm:honox@latest`;
+  await $`cd ${path_and_filename} && deno add npm:vite@latest`;
+  await $`cd ${path_and_filename} && deno add npm:@hono/vite-build/deno --dev`;
+  await $`cd ${path_and_filename} && deno add npm:@hono/vite-dev-server/deno --dev`;
 }
