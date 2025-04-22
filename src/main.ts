@@ -7,6 +7,11 @@
  * see LICENSE for details.
  */
 import { Command } from "@cliffy/command";
+import * as path from "@std/path"
+
+type options = {
+  directory: string;
+};
 
 await new Command()
   .name("create-honox-app4deno")
@@ -15,7 +20,7 @@ await new Command()
   .usage("[project-name]")
   .arguments("[projectName:string]")
   .option(
-    "-d, --directory directory:string",
+    "-d, --directory [directory:string]",
     "Directory to create the project in",
     { default: "." },
   ) // デフォルト値の例
@@ -24,6 +29,8 @@ await new Command()
       console.log(`Creating project with name: ${projectName}`);
       console.log(`Creating in directory: ${options.directory}`);
       // プロジェクト作成処理 (projectName, options.directory を利用)
+      const path_and_dirname:string = path.resolve(options.directory, projectName);
+      console.log("path_and_dirname: ", path_and_dirname);
     } else {
       console.log("Project name not provided.");
     }
