@@ -68,3 +68,25 @@ export function isDircectoryExists(path_and_filename: string): boolean {
 export function checkDenoInstalled(): boolean {
   return $.commandExistsSync("deno");
 }
+
+/**
+ * When project name is empty, call this function.
+ */
+export async function setProjectName(): Promise<string> {
+  return await $.prompt({
+    message: "What's your HonoX project name?",
+    default: "myProject", // prefilled value
+    noClear: true, // don't clear the text on result
+  });
+}
+
+/**
+ * Aaks the user for overwrite confirmation.
+ * @return {boolean} true if the user wants to overwrite, false otherwise.
+ */
+export async function askOverwrite(): Promise<boolean> {
+  return await $.confirm({
+    message: "Do you want to overwrite?",
+    default: false,
+  });
+}
