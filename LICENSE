@@ -201,5 +201,5 @@
    limitations under the License.
 
 Template Directories come from https://github.com/yusukebe/honox-examples/tree/main/projects/basic
-Those Files are MIT License.
+Those Files are MIT License without deno.jsonc
 You can see https://github.com/yusukebe/honox-examples/blob/main/README.md
