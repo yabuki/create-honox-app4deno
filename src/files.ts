@@ -60,3 +60,11 @@ export function isDircectoryExists(path_and_filename: string): boolean {
 		return false;
 	}
 }
+
+/**
+ * Have you installed deno?
+ * @return {boolean} true if deno is installed, false otherwise
+ */
+export function checkDenoInstalled(): boolean {
+  return $.commandExistsSync("deno");
+}
