@@ -22,7 +22,6 @@
 - [x] daxを使って楽をする。
 - [x] ./template/に初期コードをぶっこむ。
   - [ ] template配下に必要な設定ファイルを作る
-  - [ ] templateに、tsconfig.jsonに対応する、deno.jsonを作る
   - [ ] daxでdeno add hono honox viteを追加する。
 
 ## テスト駆動用の作りたい機能リスト
@@ -34,5 +33,6 @@
 - [ ] `deno init --npm honox-app4deno` で導入できるようにしたい。
   - [ ] Denoでnpmパッケージを作る方法を学ぶ必要がある。
 - [ ] Reactなどのテンプレート導入に関しては、依存関係を増やすため、最小限の実装ができてからやることを検討する。
+- [ ] これは、ちゃんと動くかわかるまで延期する。templateに、tsconfig.jsonに対応する、deno.jsonを作る
 
 Cspell:ignore honox
