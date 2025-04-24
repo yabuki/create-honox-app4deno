@@ -55,7 +55,7 @@ if (import.meta.main) {
 					options: { directory: string | true; force: boolean },
 					projectName?: string,
 				) => {
-					let path_and_dirname: string;
+					let path_and_project_name: string;
 					// options.directory が string または true になるため、string に変換または確認する
 					const baseDir: string = typeof options.directory === "string"
 						? options.directory
@@ -65,27 +65,27 @@ if (import.meta.main) {
 						$.log(`Creating project with name: ${projectName}`);
 						$.log(`Creating in directory: ${options.directory}`);
 						// プロジェクト作成処理 (projectName, options.directory を利用)
-						path_and_dirname = resolve(
+						path_and_project_name = resolve(
 							baseDir,
 							projectName,
 						);
-						$.logLight("path_and_dirname: ", path_and_dirname);
+						$.logLight("path_and_dirname: ", path_and_project_name);
 					} else {
 						$.logWarn("Project name not provided.");
-						path_and_dirname = resolve(
+						path_and_project_name = resolve(
 							baseDir,
 							await setProjectName(),
 						);
 					}
 					// $.log("force: ", options.force);
 					// 存在チェック
-					if (isDircectoryExists(path_and_dirname)) {
+					if (isDircectoryExists(path_and_project_name)) {
 						if (options.force) {
 							$.logWarn("Force option is set. Overwriting...");
 							// ここで上書き処理を行う
 							if (await askOverwrite()) {
 								$.logWarn("Overwriting...");
-								await removeDirectory(path_and_dirname);
+								await removeDirectory(path_and_project_name);
 							} else {
 								$.logWarn("Aborting...");
 								Deno.exit(1);
@@ -96,7 +96,7 @@ if (import.meta.main) {
 						}
 					}
 					//
-					const templatePath = Deno.makeTempDirSync({ prefix: "pft-poc" });
+					const templatePath = Deno.makeTempDirSync({ prefix: "create-honox-app4deno" });
 					const templatePath_and_File = resolve(
 						templatePath,
 						"template.tar.gz",
@@ -134,9 +134,9 @@ if (import.meta.main) {
 					//
 					await createNewDirectory(
 						resolve(templatePath, "template/"),
-						path_and_dirname,
+						path_and_project_name,
 					);
-					await installNpmModules(path_and_dirname);
+					await installNpmModules(path_and_project_name);
 					// mkTempDirの後始末
 					await removeDirectory(templatePath);
 				},
