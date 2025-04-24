@@ -13,13 +13,9 @@ import { dirname, normalize, resolve } from "@std/path";
 import { writeEmbbedfile } from "./embed_files.ts";
 import { embeddedFile } from "./embeddedFiles.ts";
 import {
-	askOverwrite,
-	checkDenoInstalled,
 	createNewDirectory,
 	installNpmModules,
-	isDircectoryExists,
 	removeDirectory,
-	setProjectName,
 } from "./files.ts";
 
 import $ from "@david/dax";
