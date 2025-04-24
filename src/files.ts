@@ -18,27 +18,29 @@ export async function createNewDirectory(
 		return false;
 	}
 	$.log("Creating directory: ", dest);
-	// createDirectory(path_and_filename);
 	await copyDirectory(src, dest);
 	return true;
 }
-// async function createDirectory(path: string){
-//   await $`mkdir -p ${path}`;
-// }
-async function copyDirectory(src: string, dest: string) {
+/**
+ * @description 指定のディレクトリをコピーする。
+ * @param src
+ * @param dest
+ * @returns {Promise<void>}
+ */
+async function copyDirectory(src: string, dest: string): Promise<void> {
 	await $`cp -r ${src} ${dest}`;
 }
 
 /**
- * 指定のディレクトリを削除する。
- * @param path_and_filename
+ * @description 指定のディレクトリを削除する。
+ * @param targetDir
  * @returns {Promise<boolean>}
  */
 export async function removeDirectory(
-	path_and_filename: string,
+	targetDir: string,
 ): Promise<boolean> {
 	try {
-		await $`rm -rf ${path_and_filename}`;
+		await $`rm -rf ${targetDir}`;
 	} catch (e) {
 		$.logError("Error: ", e);
 		return false;
@@ -51,12 +53,12 @@ export async function removeDirectory(
  * 可能かどうかを調べる。
  * すでに同名のファイル、ディレクトリ、シンボリックリンク
  * が存在する時は、trueを返す。何もないときだけfalseを返す。
- * @param path_and_filename
+ * @param targetDir
  * @returns
  */
-export function isDircectoryExists(path_and_filename: string): boolean {
+export function isDircectoryExists(targetDir: string): boolean {
 	try {
-		const file_info = Deno.statSync(path_and_filename);
+		const file_info = Deno.statSync(targetDir);
 		if (file_info.isFile) {
 			$.logWarn("File exists");
 			return true;
@@ -113,22 +115,22 @@ export async function askOverwrite(): Promise<boolean> {
 
 /***
  * Install npm modules.
- * @param path_and_filename
+ * @param targetDir
  */
 export async function installNpmModules(
-	path_and_filename: string,
+	targetDir: string,
 ): Promise<void> {
 	// Move to the directory
 	// await $`cd ${path_and_filename}`;
-	await $.cd(path_and_filename);
+	await $.cd(targetDir);
 	$.log(Deno.cwd());
 
 	// 移動してからdeno addしないとnpmのモジュールが
 	// インストールされない。自分のいまのプロジェクトに
 	// インストールされてしまう。
-	await $`cd ${path_and_filename} && deno add npm:hono@latest`;
-	await $`cd ${path_and_filename} && deno add npm:honox@latest`;
-	await $`cd ${path_and_filename} && deno add npm:vite@latest`;
-	await $`cd ${path_and_filename} && deno add npm:@hono/vite-build/deno --dev`;
-	await $`cd ${path_and_filename} && deno add npm:@hono/vite-dev-server/deno --dev`;
+	await $`cd ${targetDir} && deno add npm:hono@latest`;
+	await $`cd ${targetDir} && deno add npm:honox@latest`;
+	await $`cd ${targetDir} && deno add npm:vite@latest`;
+	await $`cd ${targetDir} && deno add npm:@hono/vite-build/deno --dev`;
+	await $`cd ${targetDir} && deno add npm:@hono/vite-dev-server/deno --dev`;
 }
