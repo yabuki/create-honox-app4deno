@@ -23,13 +23,15 @@
 - [x] ./template/に初期コードをぶっこむ。
   - [ ] template配下に必要な設定ファイルを作る
   - [ ] daxでdeno add hono honox viteを追加する。
+- firstDevelop branchで起きている問題は後回しにする
+  - parseArgsでシンプルに作り直す。
 
 ## Portable File Tree
 
 - 指定のディレクトリを圧縮して、単一ファイルにするプログラム
 - それに対応してmktempなディレクトリに展開してdaxで使えるpathを返す。
 - clean upもいるね。
-- Etude-denoでPoC作るか。
+- Etude-denoでPoC作るか。done
 
 ## テスト駆動用の作りたい機能リスト
 
