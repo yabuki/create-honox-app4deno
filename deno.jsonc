@@ -1,6 +1,17 @@
 {
   "tasks": {
-    "dev": "deno run --watch main.ts",
+    "create-targz": {
+      "description": "Update the template.tar.gz file",
+      "command": "tar -czf template.tar.gz ./template/"
+    },
+    "run": "deno run -W src/main.ts",
+    "embeding": {
+      "description": "Embed files into the template.tar.gz file",
+      "command": "deno run -W src/embed_files.ts",
+      "dependencies": [
+        "create-targz"
+      ]
+    },
     "test": "deno test --allow-all",
     "compile": "deno compile --allow-all --check --output create-honox-app4deno src/main.ts",
     "typecheck": "deno check --all src/",
@@ -11,7 +22,9 @@
     "@cliffy/command": "jsr:@cliffy/command@^1.0.0-rc.7",
     "@david/dax": "jsr:@david/dax@^0.42.0",
     "@std/assert": "jsr:@std/assert@1",
-    "@std/path": "jsr:@std/path@^1.0.8"
+    "@std/encoding": "jsr:@std/encoding@^1.0.9",
+    "@std/path": "jsr:@std/path@^1.0.8",
+    "@std/tar": "jsr:@std/tar@^0.1.6"
   },
   "lint": {
     "include": ["src/", "tests/"],
