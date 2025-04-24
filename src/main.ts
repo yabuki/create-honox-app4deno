@@ -54,38 +54,38 @@ if (import.meta.main) {
 				async (
 					options: { directory: string | true; force: boolean },
 					projectName?: string,
-				) => {
-					let path_and_project_name: string;
+				): Promise<void> => {
+					let projctDirNameWithPath: string;
 					// options.directory が string または true になるため、string に変換または確認する
 					const baseDir: string = typeof options.directory === "string"
 						? options.directory
 						: ".";
 
 					if (projectName) {
-						$.log(`Creating project with name: ${projectName}`);
+						$.log(`Creating project directory: ${projectName}`);
 						$.log(`Creating in directory: ${options.directory}`);
 						// プロジェクト作成処理 (projectName, options.directory を利用)
-						path_and_project_name = resolve(
+						projctDirNameWithPath = resolve(
 							baseDir,
 							projectName,
 						);
-						$.logLight("path_and_dirname: ", path_and_project_name);
+						$.logLight("Project Dirname with Path: ", projctDirNameWithPath);
 					} else {
 						$.logWarn("Project name not provided.");
-						path_and_project_name = resolve(
+						projctDirNameWithPath = resolve(
 							baseDir,
 							await setProjectName(),
 						);
 					}
 					// $.log("force: ", options.force);
 					// 存在チェック
-					if (isDircectoryExists(path_and_project_name)) {
+					if (isDircectoryExists(projctDirNameWithPath)) {
 						if (options.force) {
 							$.logWarn("Force option is set. Overwriting...");
 							// ここで上書き処理を行う
 							if (await askOverwrite()) {
 								$.logWarn("Overwriting...");
-								await removeDirectory(path_and_project_name);
+								await removeDirectory(projctDirNameWithPath);
 							} else {
 								$.logWarn("Aborting...");
 								Deno.exit(1);
@@ -134,9 +134,9 @@ if (import.meta.main) {
 					//
 					await createNewDirectory(
 						resolve(templatePath, "template/"),
-						path_and_project_name,
+						projctDirNameWithPath,
 					);
-					await installNpmModules(path_and_project_name);
+					await installNpmModules(projctDirNameWithPath);
 					// mkTempDirの後始末
 					await removeDirectory(templatePath);
 				},
