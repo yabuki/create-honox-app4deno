@@ -24,9 +24,16 @@
   - [ ] template配下に必要な設定ファイルを作る
   - [ ] daxでdeno add hono honox viteを追加する。
 
+## Portable File Tree
+
+- 指定のディレクトリを圧縮して、単一ファイルにするプログラム
+- それに対応してmktempなディレクトリに展開してdaxで使えるpathを返す。
+- clean upもいるね。
+- Etude-denoでPoC作るか。
+
 ## テスト駆動用の作りたい機能リスト
 
-- [ ] daxのテストって、どうするの?
+- [ ] daxの結果をどうテストするか。自明な気もするが。
 
 ## 将来
 
