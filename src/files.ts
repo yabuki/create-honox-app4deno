@@ -1,19 +1,25 @@
-/*
- * This file is Apache-2.0 licensed. See LICENSE for details.
+/**
+ * @description
+ * @license Apache-2.0
+ * @author Yukiharu YABUKI <yabuki@netfort.gr.jp>
+ * see LICENSE for details.
  */
 import $ from "@david/dax";
 import { assert } from "@std/assert/assert";
 
+/***
+ */
 export async function createNewDirectory(
-	path_and_filename: string,
+	src: string,
+	dest: string,
 ): Promise<boolean> {
-	if (isDircectoryExists(path_and_filename)) {
+	if (isDircectoryExists(dest)) {
 		$.logWarn("Directory or file already exists");
 		return false;
 	}
-	$.log("Creating directory: ", path_and_filename);
+	$.log("Creating directory: ", dest);
 	// createDirectory(path_and_filename);
-	await copyDirectory("template/", path_and_filename);
+	await copyDirectory(src, dest);
 	return true;
 }
 // async function createDirectory(path: string){
@@ -28,14 +34,16 @@ async function copyDirectory(src: string, dest: string) {
  * @param path_and_filename
  * @returns {Promise<boolean>}
  */
-export async function removeDirectory( path_and_filename: string): Promise<boolean> {
-  try {
-    await $`rm -rf ${path_and_filename}`;
-  } catch (e) {
-    $.logError("Error: ", e);
-    return false;
-  }
-  return true;
+export async function removeDirectory(
+	path_and_filename: string,
+): Promise<boolean> {
+	try {
+		await $`rm -rf ${path_and_filename}`;
+	} catch (e) {
+		$.logError("Error: ", e);
+		return false;
+	}
+	return true;
 }
 
 /**
@@ -78,18 +86,18 @@ export function isDircectoryExists(path_and_filename: string): boolean {
  * @return {boolean} true if deno is installed, false otherwise
  */
 export function checkDenoInstalled(): boolean {
-  return $.commandExistsSync("deno");
+	return $.commandExistsSync("deno");
 }
 
 /**
  * When project name is empty, call this function.
  */
 export async function setProjectName(): Promise<string> {
-  return await $.prompt({
-    message: "What's your HonoX project name?",
-    default: "myProject", // prefilled value
-    noClear: true, // don't clear the text on result
-  });
+	return await $.prompt({
+		message: "What's your HonoX project name?",
+		default: "myProject", // prefilled value
+		noClear: true, // don't clear the text on result
+	});
 }
 
 /**
@@ -97,29 +105,30 @@ export async function setProjectName(): Promise<string> {
  * @return {boolean} true if the user wants to overwrite, false otherwise.
  */
 export async function askOverwrite(): Promise<boolean> {
-  return await $.confirm({
-    message: "Do you want to overwrite?",
-    default: false,
-  });
+	return await $.confirm({
+		message: "Do you want to overwrite?",
+		default: false,
+	});
 }
 
 /***
  * Install npm modules.
  * @param path_and_filename
  */
-export async function installNpmModules(path_and_filename: string): Promise<void> {
-  // Move to the directory
-  // await $`cd ${path_and_filename}`;
-  await $.cd(path_and_filename);
-  $.log(Deno.cwd());
+export async function installNpmModules(
+	path_and_filename: string,
+): Promise<void> {
+	// Move to the directory
+	// await $`cd ${path_and_filename}`;
+	await $.cd(path_and_filename);
+	$.log(Deno.cwd());
 
- 
-  // 移動してからdeno addしないとnpmのモジュールが
-  // インストールされない。自分のいまのプロジェクトに
-  // インストールされてしまう。
-  await $`cd ${path_and_filename} && deno add npm:hono@latest`;
-  await $`cd ${path_and_filename} && deno add npm:honox@latest`;
-  await $`cd ${path_and_filename} && deno add npm:vite@latest`;
-  await $`cd ${path_and_filename} && deno add npm:@hono/vite-build/deno --dev`;
-  await $`cd ${path_and_filename} && deno add npm:@hono/vite-dev-server/deno --dev`;
+	// 移動してからdeno addしないとnpmのモジュールが
+	// インストールされない。自分のいまのプロジェクトに
+	// インストールされてしまう。
+	await $`cd ${path_and_filename} && deno add npm:hono@latest`;
+	await $`cd ${path_and_filename} && deno add npm:honox@latest`;
+	await $`cd ${path_and_filename} && deno add npm:vite@latest`;
+	await $`cd ${path_and_filename} && deno add npm:@hono/vite-build/deno --dev`;
+	await $`cd ${path_and_filename} && deno add npm:@hono/vite-dev-server/deno --dev`;
 }
