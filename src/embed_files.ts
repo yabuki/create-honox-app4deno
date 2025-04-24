@@ -7,7 +7,7 @@
  * see LICENSE for details.
  */
 
-// 
+//
 import { decodeBase64, encodeBase64 } from "@std/encoding";
 
 /**
@@ -15,7 +15,10 @@ import { decodeBase64, encodeBase64 } from "@std/encoding";
  * @param {string} fileNameWithPath - 書き込むファイルのパスとファイル名
  * @param {string} base64Content - base64 文字列
  */
-export function writeEmbbedfile(fileNameWithPath: string, base64Content: string): void {
+export function writeEmbbedfile(
+	fileNameWithPath: string,
+	base64Content: string,
+): void {
 	const decodedContent = decodeBase64(base64Content);
 	console.log(`Writing file to ${fileNameWithPath}`);
 	Deno.writeFileSync(fileNameWithPath, decodedContent, {
