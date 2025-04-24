@@ -125,12 +125,10 @@ export async function installNpmModules(
 	await $.cd(targetDir);
 	$.log(Deno.cwd());
 
-	// 移動してからdeno addしないとnpmのモジュールが
-	// インストールされない。自分のいまのプロジェクトに
-	// インストールされてしまう。
-	await $`cd ${targetDir} && deno add npm:hono@latest`;
-	await $`cd ${targetDir} && deno add npm:honox@latest`;
-	await $`cd ${targetDir} && deno add npm:vite@latest`;
-	await $`cd ${targetDir} && deno add npm:@hono/vite-build/deno --dev`;
-	await $`cd ${targetDir} && deno add npm:@hono/vite-dev-server/deno --dev`;
+  // package.jsonがあるので --dev付きでインストールしておく。
+	await $`deno add npm:hono@latest`.cwd(targetDir);
+	await $`deno add npm:honox@latest`.cwd(targetDir);
+	await $`deno add npm:vite@latest`.cwd(targetDir);
+	await $`deno add npm:@hono/vite-build/deno --dev`.cwd(targetDir);
+	await $`deno add npm:@hono/vite-dev-server/deno --dev`.cwd(targetDir);
 }
