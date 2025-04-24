@@ -43,6 +43,6 @@
     "singleQuote": false,
     "proseWrap": "preserve",
     "include": ["src/"],
-    "exclude": ["src/testdata/", "src/fixtures/**/*.ts"]
+    "exclude": ["template.tar.gz","src/embeddedFiles.ts","src/testdata/", "src/fixtures/**/*.ts"]
   }
 }
