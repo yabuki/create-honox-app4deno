@@ -7,14 +7,10 @@
  * see LICENSE for details.
  */
 import { Command } from "@cliffy/command";
-import * as path from "@std/path";
-
 import { UntarStream } from "@std/tar/untar-stream";
 import { dirname, normalize, resolve } from "@std/path";
-
 import { writeEmbbedfile } from "./embed_files.ts";
 import { embeddedFile } from "./embeddedFiles.ts";
-
 import {
 	askOverwrite,
 	checkDenoInstalled,
@@ -24,6 +20,7 @@ import {
 	removeDirectory,
 	setProjectName,
 } from "./files.ts";
+
 import $ from "@david/dax";
 
 type options = {
@@ -68,14 +65,14 @@ if (import.meta.main) {
 						$.log(`Creating project with name: ${projectName}`);
 						$.log(`Creating in directory: ${options.directory}`);
 						// プロジェクト作成処理 (projectName, options.directory を利用)
-						path_and_dirname = path.resolve(
+						path_and_dirname = resolve(
 							baseDir,
 							projectName,
 						);
 						$.logLight("path_and_dirname: ", path_and_dirname);
 					} else {
 						$.logWarn("Project name not provided.");
-						path_and_dirname = path.resolve(
+						path_and_dirname = resolve(
 							baseDir,
 							await setProjectName(),
 						);
