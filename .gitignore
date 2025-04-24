@@ -1,2 +1,7 @@
 deno.lock
 create-honox-app4deno
+src/embeddedFiles.ts
+template.tar.gz
+node_modules
+package-lock.json
+package.json
