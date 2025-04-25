@@ -1,7 +1,6 @@
 /**
  * @fileoverview
  * @description This is a simple CLI application that sets up a HonoX development environment for Deno.
- * It uses the @cliffy/command library to handle command-line arguments and options.
  * @license Apache-2.0
  * @author Yukiharu YABUKI <yabuki@netfort.gr.jp>
  * see LICENSE for details.
@@ -15,7 +14,7 @@ import { embeddedFile } from "./embeddedFiles.ts";
 import {
 	checkDenoInstalled,
 	createNewDirectory,
-	installNpmModules,
+	// installNpmModules,
 	removeDirectory,
 } from "./files.ts";
 
@@ -82,8 +81,8 @@ if (import.meta.main) {
 		resolve(template.baseDir, "template/"),
 		project.dirName,
 	);
-	$.log(`installNpmModules(${project.dirName})`);
-	await installNpmModules(project.dirName);
+	$.log(`installNpmModules2(${project.dirName})`);
+	await installNpmModules2(project.dirName);
 	// mkTempDirの後始末
 	await removeDirectory(template.baseDir);
 }
@@ -108,4 +107,28 @@ async function extractTarGz(
 		await Deno.mkdir(dirname(path), { recursive: true });
 		await entry.readable?.pipeTo((await Deno.create(path)).writable);
 	}
+}
+
+
+async function installNpmModules2(
+	targetDir: string,
+): Promise<void> {
+	// Move to the directory
+	// await $`cd ${path_and_filename}`;
+	//await $.cd(targetDir);
+	$.log(Deno.cwd());
+	$.log(`Installing npm modules in ${targetDir}`);
+  // package.jsonがあるので --dev付きでインストールしておく。
+	const args1 =[ "add", "npm:hono@latest" ];
+	await $`deno ${args1}`.cwd(targetDir);
+	const args2 = [ "add", "npm:honox@latest" ];
+	await $`deno ${args2}`.cwd(targetDir);
+	const args3 = [ "add", "npm:vite@latest" ];
+	await $`deno ${args3}`.cwd(targetDir);
+	// const args4 = [ "add", "npm:@hono/vite-build/deno", "--dev" ];
+	const args4 = [ "add", "npm:@hono/vite-build/deno" ];
+	await $`deno ${args4}`.cwd(targetDir);
+	// const args5 = [ "add", "npm:@hono/vite-dev-server/deno", "--dev" ];
+	const args5 = [ "add", "npm:@hono/vite-dev-server/deno" ];
+	await $`deno ${args5}`.cwd(targetDir);
 }
