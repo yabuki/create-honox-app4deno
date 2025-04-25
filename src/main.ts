@@ -13,6 +13,7 @@ import { dirname, normalize, resolve } from "@std/path";
 import { writeEmbbedfile } from "./embed_files.ts";
 import { embeddedFile } from "./embeddedFiles.ts";
 import {
+	checkDenoInstalled,
 	createNewDirectory,
 	installNpmModules,
 	removeDirectory,
@@ -81,6 +82,7 @@ if (import.meta.main) {
 		resolve(template.baseDir, "template/"),
 		project.dirName,
 	);
+	$.log(`installNpmModules(${project.dirName})`);
 	await installNpmModules(project.dirName);
 	// mkTempDirの後始末
 	await removeDirectory(template.baseDir);

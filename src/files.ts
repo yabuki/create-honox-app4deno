@@ -39,6 +39,7 @@ async function copyDirectory(src: string, dest: string): Promise<void> {
 export async function removeDirectory(
 	targetDir: string,
 ): Promise<boolean> {
+	$.log("Removing directory: ", targetDir);
 	try {
 		await $`rm -rf ${targetDir}`;
 	} catch (e) {
@@ -75,7 +76,7 @@ export function isDircectoryExists(targetDir: string): boolean {
 		return false;
 	} catch (e) {
 		if (e instanceof Deno.errors.NotFound) {
-			$.logError("File does not exist");
+			$.log("OK. File does not exist");
 			return false;
 		}
 		$.logError("Error: ", e);
@@ -122,9 +123,9 @@ export async function installNpmModules(
 ): Promise<void> {
 	// Move to the directory
 	// await $`cd ${path_and_filename}`;
-	await $.cd(targetDir);
+	//await $.cd(targetDir);
 	$.log(Deno.cwd());
-
+	$.log(`Installing npm modules in ${targetDir}`);
   // package.jsonがあるので --dev付きでインストールしておく。
 	await $`deno add npm:hono@latest`.cwd(targetDir);
 	await $`deno add npm:honox@latest`.cwd(targetDir);
