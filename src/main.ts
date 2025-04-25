@@ -14,12 +14,11 @@ import { embeddedFile } from "./embeddedFiles.ts";
 import {
 	checkDenoInstalled,
 	createNewDirectory,
-	// installNpmModules,
+	installNpmModules,
 	removeDirectory,
 } from "./files.ts";
 
 import $ from "@david/dax";
-
 
 type projectType = {
 	dirName: string;
@@ -34,7 +33,7 @@ type templateType = {
 // Learn more at https://docs.deno.com/runtime/manual/examples/module_metadata#concepts
 // プログラムのエントリーポイントかどうかを確認する。
 if (import.meta.main) {
-	const args = parseArgs( Deno.args );
+	const args = parseArgs(Deno.args);
 	const count = args._.length;
 	// $.log({ args });
 	if (count > 1) {
@@ -49,18 +48,18 @@ if (import.meta.main) {
 		$.log("Example: create-honox-app4deno myProject");
 	}
 	const project: projectType = {
-				dirName: typeof args._[0] === "string" ? args._[0] : "",
+		dirName: typeof args._[0] === "string" ? args._[0] : "",
 	};
-	if (project.dirName === ""){
+	if (project.dirName === "") {
 		$.logError("Project name is empty.");
 		$.logError("Please give project directory name.");
 		Deno.exit(1);
 	}
-	if (await exists(project.dirName)){
+	if (await exists(project.dirName)) {
 		$.logError("Aborting... Directory already exists.");
 		$.logError("Please choose another directory name.");
 		Deno.exit(1);
-	};
+	}
 	// Deno がインストールされているか?
 	if (!checkDenoInstalled()) {
 		$.logError("Deno is not installed.");
@@ -69,20 +68,20 @@ if (import.meta.main) {
 	}
 	const tempdir = Deno.makeTempDirSync({
 		prefix: "create-honox-app4deno",
-	})
+	});
 	const targz = "template.tar.gz";
 	const template = {
 		baseDir: tempdir,
 		fileName: targz,
-		fullPath: resolve(tempdir, targz)
+		fullPath: resolve(tempdir, targz),
 	};
 	await extractTarGz(template);
 	await createNewDirectory(
 		resolve(template.baseDir, "template/"),
 		project.dirName,
 	);
-	$.log(`installNpmModules2(${project.dirName})`);
-	await installNpmModules2(project.dirName);
+	$.log(`installNpmModules(${project.dirName})`);
+	await installNpmModules(project.dirName);
 	// mkTempDirの後始末
 	await removeDirectory(template.baseDir);
 }
@@ -107,28 +106,4 @@ async function extractTarGz(
 		await Deno.mkdir(dirname(path), { recursive: true });
 		await entry.readable?.pipeTo((await Deno.create(path)).writable);
 	}
-}
-
-
-async function installNpmModules2(
-	targetDir: string,
-): Promise<void> {
-	// Move to the directory
-	// await $`cd ${path_and_filename}`;
-	//await $.cd(targetDir);
-	$.log(Deno.cwd());
-	$.log(`Installing npm modules in ${targetDir}`);
-  // package.jsonがあるので --dev付きでインストールしておく。
-	const args1 =[ "add", "npm:hono@latest" ];
-	await $`deno ${args1}`.cwd(targetDir);
-	const args2 = [ "add", "npm:honox@latest" ];
-	await $`deno ${args2}`.cwd(targetDir);
-	const args3 = [ "add", "npm:vite@latest" ];
-	await $`deno ${args3}`.cwd(targetDir);
-	// const args4 = [ "add", "npm:@hono/vite-build/deno", "--dev" ];
-	const args4 = [ "add", "npm:@hono/vite-build/deno" ];
-	await $`deno ${args4}`.cwd(targetDir);
-	// const args5 = [ "add", "npm:@hono/vite-dev-server/deno", "--dev" ];
-	const args5 = [ "add", "npm:@hono/vite-dev-server/deno" ];
-	await $`deno ${args5}`.cwd(targetDir);
 }
