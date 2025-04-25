@@ -14,10 +14,11 @@
     },
   "compileAll": {
     "description": "Satisfy all dependencies",
-    "command": "deno task create-targz && deno task embeding",
+    "command": "deno task create-targz && deno task embeding && deno task compile",
     "dependencies": [
       "create-targz",
-      "embeding"
+      "embeding",
+      "compile"
     ]
   },
     "test": "deno test --allow-all",
