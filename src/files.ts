@@ -126,7 +126,7 @@ export async function installNpmModules(
 	//await $.cd(targetDir);
 	$.log(Deno.cwd());
 	$.log(`Installing npm modules in ${targetDir}`);
-  // package.jsonがあるので --dev付きでインストールしておく。
+	// package.jsonがあるので --dev付きでインストールしておく。
 	await $`deno add npm:hono@latest`.cwd(targetDir);
 	await $`deno add npm:honox@latest`.cwd(targetDir);
 	await $`deno add npm:vite@latest`.cwd(targetDir);
