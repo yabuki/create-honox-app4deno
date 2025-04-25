@@ -7,11 +7,19 @@
     "run": "deno run -W src/main.ts",
     "embeding": {
       "description": "Embed files into the template.tar.gz file",
-      "command": "deno run -W src/embed_files.ts",
+      "command": "deno run -A src/embed_files.ts",
       "dependencies": [
         "create-targz"
       ]
     },
+  "compileAll": {
+    "description": "Satisfy all dependencies",
+    "command": "deno task create-targz && deno task embeding",
+    "dependencies": [
+      "create-targz",
+      "embeding"
+    ]
+  },
     "test": "deno test --allow-all",
     "compile": "deno compile --allow-all --check --output create-honox-app4deno src/main.ts",
     "typecheck": "deno check --all src/",

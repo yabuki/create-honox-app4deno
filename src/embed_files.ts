@@ -29,7 +29,7 @@ export function writeEmbbedfile(
 
 // このファイルが直接実行された時にのみ処理を行う。import された場合は実行しない。
 if (import.meta.main) {
-	const templatePathAndFile: string = "../template.tar.gz"; // srcにいるので ../template.tar.gz
+	const templatePathAndFile: string = "./template.tar.gz"; // srcにいるので ../template.tar.gz
 	// template.tar.gz のパスを指定
 
 	// ファイルを読み込み、base64 にエンコード
@@ -47,7 +47,6 @@ if (import.meta.main) {
   `;
 
 	Deno.writeTextFileSync(outputFile, outputContent, {
-		createNew: true,
 		append: false,
 	});
 	console.log(`embeddedFiles.ts を生成しました: ${outputFile}`);
