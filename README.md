@@ -32,9 +32,15 @@ That's all. Enjoy!
 
 ## Technical references
 
+### Deno
+
 - [Deno Documentation](https://docs.deno.com/)
 - [@david/dax - JSR](https://jsr.io/@david/dax)
   - You need to use 0.43.0 or later. see [Compiled scripts cannot spawn `deno` · Issue #297 · dsherret/dax](https://github.com/dsherret/dax/issues/297)
   - [dsherret/dax: Cross-platform shell tools for Deno and Node.js inspired by zx.](https://github.com/dsherret/dax)
+
+### Vite
+
+- [Vite | Next Generation Frontend Tooling](https://vite.dev/)
 
 <!-- Cspell:ignore honox -->
