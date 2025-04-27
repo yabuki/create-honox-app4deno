@@ -17,7 +17,7 @@ Set up a modern HonoX web app.
 
 You've done. Now you can see that HonoX works
 
-Yes. This program gives you minimal environemnt. You can add a other framework like react, svalte and so on.
+Yes. This program gives you minimal environemnt. You can add a other framework like react, svelte and so on.
 
 ## How to build
 
