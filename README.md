@@ -11,7 +11,7 @@ Set up a modern HonoX web app.
 
 1. Clone the repositry
 2. Build: Run the following command `deno task build`
-3. Create Project: `./create-honox-app4deno "projectName"`
+3. Create Project: `./create-honox-app4deno "projectName"` if you want to add path like "/tmp/projectName". 
 4. Navigate to the directory. `cd "projectName"`
 5. Start Development server. `deno task dev`
 
